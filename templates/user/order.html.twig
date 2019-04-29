@@ -1,0 +1,79 @@
+{% extends "base.html.twig" %}
+
+{% block  title %}Order list{% endblock %}
+
+{% block body %}
+
+
+{% if orders %}
+<div class="container">
+<br>
+{% for order in orders %}
+<table class="table border" >
+<thead>
+<tr>
+<h4>Order No: {{order.id}}  Order Total : RM {{order.orderTotal|number_format(2, '.', ',')}}</h4>
+<th>Product</th>
+<th>Image</th>
+<th>Price</th>
+<th>Quantity</th>
+<th>Total</th>
+</tr>
+</thead>
+{% for product in order.orderDetails %}
+<tbody>
+<tr>
+<td>{{product.productModel.productName}}</td>
+<td><img height="70" width="70" src="{{ asset('/images/' ~ product.productModel.productImage) }}"></td>
+<td>RM : {{product.productModel.productPrice|number_format(2, '.', ',')}}</td>
+<td>{{product.qty}}</td>
+<td>RM : {{(product.productModel.productPrice * product.qty)|number_format(2, '.', ',')}}</td>
+</tr>
+</tbody>
+{% endfor %}
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th>Total</th>
+<th>RM : {{order.orderTotal|number_format(2, '.', ',')}}</th>
+</tr>
+<tr>
+
+<th><h5>Payment Details</h5></th>
+
+
+</tr>
+
+<tr>
+
+<th>Payment Type</th>
+<th>Amount</th>
+<th>Reference</th>
+<th>Payment Email</th>
+<th>Payment Status</th>
+<th>Date of Payment</th>
+
+</tr>
+<tr>
+
+<td>{{order.paymentModel.paymentType}}</td>
+<td>RM {{order.paymentModel.amount|number_format(2, '.', ',')}}</td>
+<td>{{order.paymentModel.reference}}</td>
+<td>{{order.paymentModel.payerEmail}}</td>
+<th style="color:green">{{order.paymentModel.paymentStatus}}</th>
+<td>{{order.paymentModel.paymentDatetime}}</td>
+
+</tr>
+
+
+
+</table>
+<br>
+{% endfor %}
+</div>
+
+{% else %}
+<h4>You dont have any Order.</h4>
+{% endif %}
+{% endblock body %}

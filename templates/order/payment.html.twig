@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Payment!{% endblock %}
+
+{% block body %}
+<div class="container"style="margin-top:20px">
+  <div class="row">
+<div class="col">
+  <h4>Paypal </h4>
+
+
+    {{form_start(form)}}
+{{form_widget(form.paypal)}}
+    
+
+
+
+</div>
+
+
+<div class="col">
+<h4>Shopping Cart</h4>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col"></th>
+
+
+    </tr>
+  </thead>
+  <tbody>
+{% set i = 0 %}{% set tot = 0 %}
+{% for product in products %}
+    <tr>
+      <td><img height="70" width="70" src="{{ asset('/images/' ~ product.productImage) }}"></td>
+      <small>
+      <td>
+        <p>{{product.productName}}</p>
+        RM {{stock[i].productPrice}} x {{product.Qty}} =RM {{ (stock[i].productPrice * product.Qty)|number_format(2, '.', ',') }}
+      </td>
+      </small>
+    </tr>
+{% set tot = tot + (stock[i].productPrice * product.Qty) %}
+{% set i = i + 1 %}
+{% endfor %}
+    <tr>
+    </tbody>
+<tbody>
+  <tr>
+    <th scope="row">Order Total</th>
+    <th>RM {{ tot|number_format(2, '.', ',')}}</th>
+  </tr>
+  </tbody>
+
+</table>
+
+</div>
+</div></div>
+
+
+<div class="container"style="margin-top:20px">
+  <h4>Demo payment</h4>
+ 
+  {{form_widget(form.demo)}}
+  <h5>Total Payment : RM {{ total|number_format(2, '.', ',')}}</h5>
+{{form_end(form)}}
+</div>
+
+
+{% endblock %}

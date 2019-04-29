@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+{% block title %}My Cart List {% endblock %}
+{% block body %}
+<div class="container">
+{% if products %}
+<table class="table table-hover">
+<thead>
+  <tr>
+    <th scope="col"></th>
+    <th scope="col">Item</th>
+    <th scope="col">Price</th>
+    <th scope="col">Quantity</th>
+    <th scope="col">Remove</th>
+    <th scope="col">Total</th>
+
+  </tr>
+</thead>
+
+
+{% set i = 0 %}{% set nostock = 0 %}
+{% set tot = 0 %}
+{% for product in products %}
+
+<tbody>
+  <tr>
+    <td><img height="70" width="70" src="{{ asset('/images/' ~ product.productImage) }}"></td>
+    <td>{{ product.productName}}</td>
+    <td>{{ product.cartPrice|number_format(2, '.', ',') }}</td>
+    <td> 
+   
+    {{ form_start(form[i],{'action': path('update_cart'),'method': 'GET'})  }}
+     {{form_widget(form[i].qty, { 'value' : product.Qty , 'attr' : { 'class' : 'form-control', 'style' : 'width : 5em'} })}} 
+ {{form_widget(form[i].save, { 'attr' : { 'class' : 'btn btn-outline-primary'} })}}
+     {{ form_end(form[i]) }}
+     
+     {% if (stock[i].productStock -  product.Qty) < 0 %}
+     {% set nostock = (nostock + 1) %}
+      <p style="color: red" >
+      
+     {% endif %}
+     Stock Left : {{ stock[i].productStock -  product.Qty}} <p>
+ 
+    </td>
+    <td><a href="{{ url('remove_cart', { product : product.productId}) }}" class="">Remove</a></td>
+    <td>{{ (stock[i].productPrice * product.Qty)|number_format(2, '.', ',') }}</td>
+{% set tot = tot + (stock[i].productPrice * product.Qty) %}
+{% set i = i + 1 %}
+
+{% endfor %}
+<tbody>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <th>Total</th>
+  <th>{{ total|number_format(2, '.', ',')}}</th>
+</tr>
+</tbody>
+
+</table>
+
+<div  class="float-right">{{form_start(checkout)}}{{ form_widget(checkout.save, {'attr' : { 'class' : 'btn btn-primary', 'id' : 'hello' }})}}{{form_end(checkout)}}</div>
+{{tot}}
+</div>
+
+{% else %}
+
+<h3>Your Cart is Empty</h3>
+
+{% endif %}
+
+{% endblock %}

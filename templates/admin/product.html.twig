@@ -1,0 +1,28 @@
+{% extends "admin/adminBase.html.twig" %}
+
+{% block title %}hellow{% endblock %}
+
+{% block body %} 
+<h6>Add New Product</h6>
+
+{{form_errors(form)}}
+<div class="container">
+ {{ form_start(form) }}
+{{form_row(form.product_name)}}
+{{form_row(form.product_price)}}
+{{form_row(form.product_stock)}}
+{{form_row(form.product_image)}}
+{{form_row(form.description)}}
+
+{{form_row(form.category, {'attr' : {'class' : 'form-control', 'style' : 'width:10em'}})}}
+<a href="{{ path('add_category')}}" >Add New Category</a>
+<br><br>
+{{form_widget(form.submit)}}
+ {{form_end(form)}}
+
+ </div>
+
+
+
+{% endblock %}
+

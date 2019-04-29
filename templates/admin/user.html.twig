@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+
+
+<div class="container">
+<br>
+
+{{ form_start(form) }}
+<p>{{ form_widget(form.email,{'attr' : { 'style' :'width: 20em', 'class' : 'form-control','placeholder' : 'Email'} }) }}</p>
+
+<p>{{form_widget(form.firstName,{'attr' : { 'style' :'width: 20em', 'class' : 'form-control','placeholder' : 'First Name'} })}}</p>
+
+<p>{{form_widget(form.lastName,{'attr' : {'style' :'width: 20em', 'class' : 'form-control','placeholder' : 'Last Name'} })}}</p>
+
+
+<p>{{form_widget(form.password.first, {'attr' : { 'style' :'width: 20em','class' : 'form-control' ,'placeholder' :'Password'}})}}
+<p>{{form_widget(form.password.second, {'attr' : {'style' :'width: 20em', 'class' : 'form-control', 'placeholder' : 'Confirm Password'}})}}
+<p>{{form_widget(form.roles, {'attr' : {'style' :'width: 20em', 'class' : 'form-control', 'placeholder'  : 'Roles'}})}}<br>
+<p>{{form_widget(form.includeAddress, {'attr': {'onclick': 'hideAddress()'}})}}   Dont Include Address</P>
+<br>
+
+
+
+
+<p>{{form_widget(form.address,{'attr' : { 'style' :'width: 20em','class' : 'form-control add' , 'placeholder' : 'Address'} } )}}
+<p>{{form_widget(form.city,{'attr' : { 'style' :'width: 20em','class' : 'form-control add', 'placeholder' : 'City' } })}}
+<P>{{form_widget(form.postcode,{'attr' : { 'style' :'width: 20em','class' : 'form-control add', 'placeholder' : 'Postcode' } })}}
+<p>{{form_widget(form.state,{'attr' : {'style' :'width: 20em', 'class' : 'form-control add', 'placeholder' : 'State' } })}}
+<p>{{form_widget(form.country,{'attr' : { 'style' :'width: 20em','class' : 'form-control add' , 'placeholder' : 'Country'} })}}
+<p>{{form_widget(form.contactNo,{'attr' : {'style' :'width: 20em', 'class' : 'form-control add' , 'placeholder' : 'Contact No'} })}}
+
+{{ form_row(form.submit,{'attr' : {'class' : 'btn btn-primary'} }) }}
+
+
+
+</div>           
+{{ form_end(form) }}
+
+<script>
+
+function hideAddress(){
+
+var x = document.getElementsByClassName("add");
+for (var y in x){
+
+
+if (x[y].style.display === 'none'){
+x[y].style.display = "block"; 
+x[y].required = true;
+
+
+}else{
+x[y].style.display = "none"; 
+x[y].required = false;
+
+}
+}
+
+
+}
+
+</script>
+
+ {% if form_errors(form.password.first) %}       
+<div class="alert alert-warning float">{{form_errors(form.password.first)}}</div>
+{% endif %}
+{{ form_errors(form) }}
+
+{{ form_end(form) }}
+
+    {% endblock %}

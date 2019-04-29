@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TestController!{% endblock %}
+
+{% block body %}
+  <script
+    src="https://www.paypal.com/sdk/js?client-id=AQPgENUIqjDMoIP50iqUQU0Ig4i1AwP5GYnnz6Sdb54QLyJnFel96cHkS6g6pzzsOH5XKfRcX3KIDFcF">
+  </script>
+
+<div id="paypal-button-container"></div>
+
+  <script>
+  paypal.Buttons({
+    createOrder: function(data, actions) {
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: '0.01'
+          }
+        }]
+      });
+    },
+    onApprove: function(data, actions) {
+      return actions.order.capture().then(function(details) {
+        alert('Transaction completed by ' + details.payer.name.given_name);
+        // Call your server to save the transaction
+        return fetch('/paypal-transaction-complete', {
+          method: 'post',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            orderID: data.orderID
+          })
+        });
+      });
+    }
+  }).render('#paypal-button-container');
+</script>
+{% endblock %}

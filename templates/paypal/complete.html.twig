@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% block title %}Payment Status{% endblock %}
+
+{% block body %}
+<div class="container">
+<h5>Thank you For Your Purchase your order : {{orderId}} has been approved with purchase RM {{payment}}</h5>
+<br><br><br>
+<table class="table">
+<thead>
+<tr>
+    <th>Payment</th>
+    <th>Payment Id</th>
+    <th>Status</th>
+    <th>Order Id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RM: {{payment}}</td>
+<td>{{paymentId}}</td>
+<td>{{status}}</td>
+<td>{{orderId}}</td>
+</tr>
+
+
+</tbody>
+</table>
+
+<a href="{{ path('home') }}">Home</a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+ {% extends "base.html.twig" %}
+
+  {% block  title %}Product list{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<style>
+.pagination{
+	margin:30px 0;
+}
+
+
+.pagination span{
+	padding: 8px 13px;
+	margin:5px;
+	background: #f4f4f4;
+	border: 1px #ccc solid;
+}
+</style>{% endblock head %}
+{% block body %}
+
+
+
+{% if pagination %}
+<br>
+<div class="border container">
+<br>
+     <div class="row">
+      {% set i = 0 %}
+     
+     {% for product in pagination %}
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-00">
+              <a href="{{ url('app_view', { id : product.id }) }}"><img class="card-img-top"  src="{{ asset('/images/' ~ product.productImage) }}" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="{{ url('app_view', { id : product.id }) }}">{{product.productName}}</a>
+                </h4>
+                <h5>RM : {{product.productPrice |number_format(2, '.', ',')}}</h5>
+                <h6>Category: {{product.category.categoryName}}</h6>     
+                <p>Stock : {{product.productStock}}</p>          
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+{#         <div class="col-lg-4">
+        <img height="150"  src="{{ asset('/images/' ~ product.productImage) }}">
+        <h3>{{product.productName}} </h3>
+        Price RM : {{product.productPrice |number_format(2, '.', ',')}}
+        <p>Stock : {{product.productStock}}</p>
+        <a href="{{ url('app_view', { id : product.id }) }}" class="">View</a>
+        </div> #}
+    {% set i = (i + 1) %}
+     {% if (i % 3) == 0 %}
+     </div><div class="row">
+     {% endif %}
+
+        {% endfor %}
+      </div>
+
+
+
+
+{% else %}
+    <h2>No product</h2>
+
+{% endif %}
+
+<div class="n"> {{ knp_pagination_render(pagination)}}</div>
+</div>
+{% endblock %}
+

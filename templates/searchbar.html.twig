@@ -1,0 +1,6 @@
+{{ form_start(form,{ 'attr' : { 'class' : 'form-inline my-2 my-lg-0','action' : path('search_bar')}})
+}}
+
+{{form_widget(form.search, {'attr' : { 'class' : 'form-control mr-sm-2','placeholder' : 'Search Product'}})}}
+<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+{{ form_end(form)}}

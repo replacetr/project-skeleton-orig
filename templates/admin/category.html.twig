@@ -1,0 +1,18 @@
+{% extends "admin/adminBase.html.twig" %}
+
+{% block  title %}Add New Category{% endblock %}
+
+{% block body %}
+
+{% for category in categories %}
+
+<ul><li>
+{{category.categoryName}}   <a href="{{ url('add_category' , {id : category.id}) }}">[X]</a>
+</li></ul>
+{% endfor %}
+
+{{form_start(form)}}
+{{form_widget(form.category_name, {'attr' : { 'placeholder' : 'Add Category'}})}}
+<p><button type="submit">submit</button></p>
+{{form_end(form)}}
+{% endblock %}

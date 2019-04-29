@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+
+{% block  title %}Search list{% endblock %}
+
+{% block body %}
+
+
+{% if product %}
+{% for products in product %}
+
+<div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-00">
+              <a href="#"><img class="card-img-top"  src="{{ asset('/images/' ~ products.productImage) }}" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="{{ url('app_view', { id : products.id }) }}">{{products.productName}}</a>
+                </h4>
+                <h5>RM : {{products.productPrice |number_format(2, '.', ',')}}</h5>
+                <h6>Category: {{products.category.categoryName}}</h6>
+
+                <p class="card-text">{{products.Description}}</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+              </div>
+            </div>
+          </div>
+
+{% endfor %}
+
+{% else %}
+<h2>No Product Found.</h2>
+{% endif %}
+{% endblock body %}
